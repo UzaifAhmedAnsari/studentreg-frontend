@@ -1,13 +1,18 @@
-    // frontend/src/pages/admin/AdminManageUsersPage.jsx
+    // frontend/src/pages/admin/ManageUsersPage.jsx
+
     import { useEffect, useState } from 'react';
     import api from '../../services/api';
     import Spinner from '../../components/common/Spinner';
     import Button from '../../components/common/Button';
-    import Modal from '../../components/common/Modal'; // Modal component import kiya
-    import Input from '../../components/common/Input'; // Input component import kiya
-    import { toast } from 'react-hot-toast'; // Toast notifications ke liye
+    import Modal from '../../components/common/Modal';
+    import Input from '../../components/common/Input';
+    import { toast } from 'react-hot-toast'; // Ensure this is imported
 
-    const AdminManageUsersPage = () => {
+    // SVG Icons
+    // ... (SVG Icons for Users, Book, CheckSquare, UserCheck - same as AdminDashboardPage)
+
+    // *** Yahan component ka naam ManageUsersPage hona chahiye ***
+    const ManageUsersPage = () => { // <-- Ensure this name matches the file and export
       const [users, setUsers] = useState([]);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState(null);
@@ -140,5 +145,6 @@
       );
     };
 
-    export default ManageUsersPage;
+    // *** Yahan export default ka naam file ke naam se match hona chahiye ***
+    export default ManageUsersPage; // <-- Ensure this matches the component name above
     
