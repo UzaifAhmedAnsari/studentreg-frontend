@@ -1,0 +1,50 @@
+/* src/index.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Google Fonts se Inter font import karein */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+  background-color: var(--tw-colors-background);
+  font-family: 'Inter', sans-serif;
+  color: var(--tw-colors-body);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
+
+a {
+  @apply no-underline;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+*:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-md;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--tw-colors-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--tw-colors-primary-light);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tw-colors-primary-dark);
+}
