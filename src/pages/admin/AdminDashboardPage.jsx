@@ -1,9 +1,10 @@
     // frontend/src/pages/admin/AdminDashboardPage.jsx
     import { useEffect, useState } from 'react';
-    import { useNavigate } from 'react-router-dom'; // useNavigate import kiya
+    import { useNavigate } from 'react-router-dom';
     import api from '../../services/api';
     import Card from '../../components/common/Card';
     import Spinner from '../../components/common/Spinner';
+    import { toast } from 'react-hot-toast'; // Toast notifications ke liye
 
     // SVG Icons
     const UsersIcon = ({ size = 28, className = '' }) => (
@@ -17,13 +18,13 @@
     );
     const UserCheckIcon = ({ size = 28, className = '' }) => (
         <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 10v6"/><path d="M19 13h6"/></svg>
-    ); // New icon for instructors
+    );
 
     const AdminDashboardPage = () => {
       const [stats, setStats] = useState(null);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState(null);
-      const navigate = useNavigate(); // useNavigate hook use kiya
+      const navigate = useNavigate();
 
       useEffect(() => {
         const fetchStats = async () => {
@@ -31,8 +32,9 @@
             const response = await api.get('/admin/dashboard-stats');
             setStats(response.data);
           } catch (err) {
-            setError('Failed to fetch dashboard stats.');
+            setError('Failed to fetch dashboard stats. Please check backend connection.');
             console.error('Error fetching admin dashboard stats:', err);
+            toast.error('Failed to load dashboard stats.');
           } finally {
             setLoading(false);
           }
@@ -51,9 +53,9 @@
       const dashboardCards = [
         { title: 'Total Users', value: stats.totalUsers, icon: <UsersIcon />, path: '/admin/users' },
         { title: 'Total Students', value: stats.totalStudents, icon: <UsersIcon />, path: '/admin/users?role=Student' },
-        { title: 'Total Instructors', value: stats.totalInstructors, icon: <UserCheckIcon />, path: '/admin/users?role=Instructor' }, // New card for instructors
+        { title: 'Total Instructors', value: stats.totalInstructors, icon: <UserCheckIcon />, path: '/admin/users?role=Instructor' },
         { title: 'Total Courses', value: stats.totalCourses, icon: <BookIcon />, path: '/admin/courses' },
-        { title: 'Total Registrations', value: stats.totalRegistrations, icon: <CheckSquareIcon />, path: '/admin/registrations' }, // Assuming /admin/registrations exists or will be created
+        { title: 'Total Registrations', value: stats.totalRegistrations, icon: <CheckSquareIcon />, path: '/admin/registrations' },
       ];
 
       return (
@@ -63,8 +65,8 @@
             {dashboardCards.map((card) => (
               <Card
                 key={card.title}
-                className="p-6 text-center cursor-pointer hover:bg-primary-lightest transition-colors duration-200" // Cursor and hover effect
-                onClick={() => handleCardClick(card.path)} // Click handler
+                className="p-6 text-center cursor-pointer hover:bg-primary-lightest transition-colors duration-200"
+                onClick={() => handleCardClick(card.path)}
               >
                 <div className="flex justify-center mb-4">
                   <div className="bg-primary/10 text-primary p-4 rounded-full flex items-center justify-center shadow-soft">

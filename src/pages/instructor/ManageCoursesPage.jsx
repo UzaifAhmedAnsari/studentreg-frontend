@@ -6,9 +6,9 @@
     import Button from '../../components/common/Button';
     import Modal from '../../components/common/Modal';
     import Input from '../../components/common/Input';
-    import { toast } from 'react-hot-toast'; // Ensure this is imported
+    import { toast } from 'react-hot-toast';
 
-    // SVG Icons for Add/Delete
+    // SVG Icons for Add/Delete/Edit
     const PlusIcon = ({ size = 20, className = '' }) => (
         <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 5v14"/><path d="M5 12h14"/></svg>
     );
@@ -19,8 +19,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
     );
 
-    // *** Yahan component ka naam ManageCoursesPage hona chahiye ***
-    const ManageCoursesPage = () => { // <-- Ensure this name matches the file and export
+    const ManageCoursesPage = () => { // Component name match
       const [courses, setCourses] = useState([]);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState(null);
@@ -29,7 +28,7 @@
       const [currentCourse, setCurrentCourse] = useState({
         title: '',
         description: '',
-        price: '',
+        price: 0, // Default to 0
         imageUrl: '',
         category: '',
         modules: [],
@@ -37,14 +36,16 @@
 
       const fetchCourses = async () => {
         try {
-          const response = await api.get('/courses'); // All courses, then filter by user if needed
-          // For instructor, only show their courses
+          const response = await api.get('/courses');
           const userStored = localStorage.getItem('user');
           const userInfo = userStored ? JSON.parse(userStored) : null;
+
           if (userInfo && userInfo.id) {
-            setCourses(response.data.filter(course => course.user === userInfo.id));
+            // Filter courses by the logged-in instructor's ID
+            const instructorCourses = response.data.filter(course => course.user === userInfo.id);
+            setCourses(instructorCourses);
           } else {
-            setCourses([]); // No user, no courses
+            setCourses([]);
           }
         } catch (err) {
           setError('Failed to fetch courses.');
@@ -64,7 +65,7 @@
         setCurrentCourse({
           title: '',
           description: '',
-          price: '',
+          price: 0,
           imageUrl: '',
           category: '',
           modules: [],
@@ -344,6 +345,5 @@
       );
     };
 
-    // *** Yahan export default ka naam file ke naam se match hona chahiye ***
-    export default ManageCoursesPage; // <-- Ensure this matches the component name above
+    export default ManageCoursesPage;
     
