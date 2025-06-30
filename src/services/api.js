@@ -2,7 +2,7 @@
 
     // Create an Axios instance
     const api = axios.create({
-      baseURL: 'https://studentreg-backend.ahmeduzaif200.repl.co/api', // <-- Yeh URL bilkul sahi honi chahiye
+      baseURL: 'studentreg-backend-production.up.railway.app/api', // <-- Yeh URL bilkul sahi honi chahiye
       headers: {
         'Content-Type': 'application/json',
       },
