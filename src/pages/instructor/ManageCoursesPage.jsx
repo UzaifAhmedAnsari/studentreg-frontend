@@ -19,7 +19,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
     );
 
-    const ManageCoursesPage = () => { // Component name match
+    const ManageCoursesPage = () => {
       const [courses, setCourses] = useState([]);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState(null);
@@ -28,8 +28,8 @@
       const [currentCourse, setCurrentCourse] = useState({
         title: '',
         description: '',
-        price: 0, // Default to 0
-        imageUrl: '',
+        price: 0,
+        // imageUrl: '', // <-- Yeh line hata di hai
         category: '',
         modules: [],
       });
@@ -41,7 +41,6 @@
           const userInfo = userStored ? JSON.parse(userStored) : null;
 
           if (userInfo && userInfo.id) {
-            // Filter courses by the logged-in instructor's ID
             const instructorCourses = response.data.filter(course => course.user === userInfo.id);
             setCourses(instructorCourses);
           } else {
@@ -66,7 +65,7 @@
           title: '',
           description: '',
           price: 0,
-          imageUrl: '',
+          // imageUrl: '', // <-- Yeh line hata di hai
           category: '',
           modules: [],
         });
@@ -239,12 +238,13 @@
                 onChange={(e) => setCurrentCourse({ ...currentCourse, price: parseFloat(e.target.value) || 0 })}
                 required
               />
-              <Input
+              {/* Image URL field hata diya hai */}
+              {/* <Input
                 label="Image URL (Optional)"
                 id="imageUrl"
                 value={currentCourse.imageUrl}
                 onChange={(e) => setCurrentCourse({ ...currentCourse, imageUrl: e.target.value })}
-              />
+              /> */}
               <Input
                 label="Category (Optional)"
                 id="category"
@@ -252,7 +252,7 @@
                 onChange={(e) => setCurrentCourse({ ...currentCourse, category: e.target.value })}
               />
 
-              {/* Modules Section */}
+              {/* Modules Section - Ensure this entire block is present and correct */}
               <div className="border border-border-light rounded-lg p-4 space-y-4">
                 <h3 className="text-lg font-semibold text-heading">Course Modules</h3>
                 {currentCourse.modules.map((module, moduleIndex) => (
@@ -303,7 +303,7 @@
                           />
                           {/* Resources Section */}
                           <div className="space-y-2">
-                            <h5 className="text-sm font-semibold text-heading">Resources</h5>
+                            <h5 className="text-sm font-semibold text-heading">Resources (URLs to documents/files)</h5>
                             {lecture.resources.map((resource, resourceIndex) => (
                               <div key={resourceIndex} className="flex items-center space-x-2">
                                 <Input
